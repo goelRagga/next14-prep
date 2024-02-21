@@ -1,32 +1,49 @@
-import Link from "next/link";
-
+import NavLink from "./navLink/navLink";
+import styles from "./links.module.css";
 
 const Links = () => {
+  const links = [
+    {
+      title: "HomePage",
+      path: "/",
+    },
+    {
+      title: "About",
+      path: "/about",
+    },
+    {
+      title: "Contact",
+      path: "/contact",
+    },
+    {
+      title: "Blog",
+      path: "/blog",
+    },
+  ];
 
-    const links = [
-        {
-            title:"HomePage",
-            path:"/"
-        },
-        {
-            title:"About",
-            path:"/about"
-        }, 
-        {
-            title:"Contact",
-            path:"/contact"
-        }, 
-        {
-            title:"Blog",
-            path:"/blog"
-        }, 
-       
-    ];
+  const session = true;
+  const isAdmin = true;
+
   return (
-    <div>{links.map((link)=>{
-        return (<Link href={link.path} key={link.title}> {link.title}</Link>)
-    })}</div>
-  )
-}
+    <div className={styles.links}>
+      {links.map((link) => (
+        <NavLink item={link} key={link.title} />
+          
 
-export default Links
+      ))}
+
+
+      {session ? (
+        <>
+        {isAdmin &&  <NavLink item={{title:"Admin", path:"/admin"}}/>}
+        <button className={styles.logout}>Logoout</button>
+        </>
+    
+      ) :(
+      <NavLink item={{title:"Login", path:"/login"}}/>
+      )}
+    </div>
+  );
+};
+
+export default Links;
